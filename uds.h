@@ -1,7 +1,7 @@
 // UDS Frame Types
-#define UDS_FRAME_TYPE_SF = 0x01; //Single Frame (SF): Used for messages that fit within a single frame (up to 255 bytes).
-#define UDS_FRAME_TYPE_FF = 0x02; //First Frame (FF): Used for messages that are larger than 255 bytes. It indicates the beginning of a multi-frame message.
-#define UDS_FRAME_TYPE_CF = 0x03; //Consecutive Frame (CF): Used to continue a multi-frame message after the first frame.
+#define UDS_FRAME_TYPE_SF 0x01; //Single Frame (SF): Used for messages that fit within a single frame (up to 255 bytes).
+#define UDS_FRAME_TYPE_FF 0x02; //First Frame (FF): Used for messages that are larger than 255 bytes. It indicates the beginning of a multi-frame message.
+#define UDS_FRAME_TYPE_CF 0x03; //Consecutive Frame (CF): Used to continue a multi-frame message after the first frame.
 
 // Diagnostic and communication management
 #define UDS_DSC_REQUEST_SERVICE_ID 0x10 //DIAGNOSTIC SESSION CONTROL
@@ -42,11 +42,11 @@
 
 #define NEGATIVE_RESPONSE_MODE 0x7F
 
-#define UDS_DSC_RESPONSE_SERVICE_ID = 0x50;
-#define ECU_RESET_RESPONSE_ID = 0x51;
+#define UDS_DSC_RESPONSE_SERVICE_ID 0x50;
+#define ECU_RESET_RESPONSE_ID 0x51;
 
 // Diagnostic Session Control
-#define UDS_DSC_PCI = 0x01; //Protocol Control Information
-#define UDS_DSC_TYPE_DEFAULT_SESSION = 0x01;
-#define UDS_DSC_TYPE_EXTENDED_SESSION = 0x02;
-#define UDS_DSC_TYPE_PROGRAMMING_SESSION = 0x03;
+#define UDS_DSC_PCI 0x01; //Protocol Control Information
+#define UDS_DSC_TYPE_DEFAULT_SESSION 0x01;
+#define UDS_DSC_TYPE_EXTENDED_SESSION 0x02;
+#define UDS_DSC_TYPE_PROGRAMMING_SESSION 0x03;
