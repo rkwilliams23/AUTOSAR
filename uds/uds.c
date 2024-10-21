@@ -1,10 +1,10 @@
 #include "uds.h"
 
-/*
-Send negative response message
-INPUT: NRC - Negative Response Code
-*/
-void uds_nrsp(const i15765_t *msg, uint8_t nrc, uint8_t svcid)
+//Function prototypes
+void uds_tx(const i15765 *rec_msg, const uint8_t *)
+
+//Send Negative Response Code
+void uds_nrsp(const i15765 *msg, uint8_t nrc, uint8_t svcid)
 {
   uint8_t rsp[3];
   rsp[0] = UDS_SVCID_NRSP;
@@ -18,8 +18,8 @@ void uds_nrsp(const i15765_t *msg, uint8_t nrc, uint8_t svcid)
 
 
 // Function Prototypes
-void uds_tx(const i15765_t *rec_msg, const uint8_t *ibuf, uint16_t len);
-void uds_process(const i15765_t *msg);
+void uds_tx(const i15765 *rec_msg, const uint8_t *ibuf, uint16_t len);
+void uds_process(const i15765 *msg);
 void uds_update(void);
-void uds_nrsp(const i15765_t *msg, uint8_t nrc, uint8_t svcid);
+void uds_nrsp(const i15765 *msg, uint8_t nrc, uint8_t svcid);
 void uds_init(void);
