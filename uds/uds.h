@@ -79,7 +79,7 @@ const uint32_t UDS_SUBFN_RECMBMRA       = 0xC17DU //READ_ECM_Buffer_Memory_Resta
 const uint32_t UDS_SUBFN_RECMBMBR       = 0xC17EU //READ_ECM_Buffer_Memory_Bytes_Received
 const uint32_t UDS_SUBFN_TRAC           = 0xC3E2U //Telematics Remote Adjustment Count
 const uint32_t UDS_SUBFN_TRAS           = 0xC3E3U //Telematics Remote Adjustment Status
-const uint32_t UDS_SUBFN_ERASeMEM       = 0xFF00U //UDS_eraseMemory
+const uint32_t UDS_SUBFN_ERAMEM         = 0xFF00U //UDS_eraseMemory
 const uint32_t UDS_SUBFN_CPD            = 0xFF01U //UDS_checkProgrammingDependencies
 const uint32_t UDS_SUBFN_EXEC_SBCI      = 0xF084U //EXEC_startBufferedCalibrationInstallation
 const uint32_t UDS_SUBFN_EXEC_SRB       = 0xF092U //EXEC_startRollback
@@ -88,12 +88,5 @@ const uint32_t UDS_SUBFN_CRW            = 0xF0BCU //Cancel Remote Write
 const uint32_t UDS_SUBFN_SUPLR_ID       = 0x12C5U //SUPPLIER_Id
 const uint8_t UDS_SUBFN_ACESLEV_13      = 0x13U
 const uint8_t UDS_SUBFN_ACESLEV_14      = 0x14U
-
-// Function Prototypes
-void uds_tx(const i15765_t *rec_msg, const uint8_t *ibuf, uint16_t len);
-void uds_process(const i15765_t *msg);
-void uds_update(void);
-void uds_nrsp(const i15765_t *msg, uint8_t nrc, uint8_t svcid);
-void uds_init(void);
 
 #endif
