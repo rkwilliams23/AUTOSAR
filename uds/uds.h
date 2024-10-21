@@ -89,4 +89,8 @@ const uint32_t UDS_SUBFN_SUPLR_ID       = 0x12C5U; //SUPPLIER_Id
 const uint8_t UDS_SUBFN_ACESLEV_13      = 0x13U;
 const uint8_t UDS_SUBFN_ACESLEV_14      = 0x14U;
 
+// Function prototypes for UDS functions
+void sendUDSRequest(UdsServiceId serviceId, uint8_t *data, size_t dataSize);
+void handleUDSResponse(uint8_t *responseData, size_t responseSize);
+
 #endif
