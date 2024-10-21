@@ -13,3 +13,13 @@ void uds_nrsp(const i15765_t *msg, uint8_t nrc, uint8_t svcid)
   
   uds_tx(msg, rsp, (uint16_t) 3 );
 }
+
+
+
+
+// Function Prototypes
+void uds_tx(const i15765_t *rec_msg, const uint8_t *ibuf, uint16_t len);
+void uds_process(const i15765_t *msg);
+void uds_update(void);
+void uds_nrsp(const i15765_t *msg, uint8_t nrc, uint8_t svcid);
+void uds_init(void);
