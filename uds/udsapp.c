@@ -319,8 +319,7 @@ udsapp_requl( uint32_t req_addr, uint32_t size, uint8_t fmt )
 **        buf_len -> length of i/o data
 ** Output: Return UDS_NRC_NONE if packet handled correctly.
 */
-uint8_t
-udsapp_transfer_data( uint8_t bsc, uint8_t *buf, uint16_t *buf_len )
+uint8_t udsapp_transfer_data( uint8_t bsc, uint8_t *buf, uint16_t *buf_len )
 {
   uint16_t len = 0;
   uint16_t cnt = 0;
@@ -330,12 +329,12 @@ udsapp_transfer_data( uint8_t bsc, uint8_t *buf, uint16_t *buf_len )
       /* resend previous */
       len = udsapp_tx_plen;
     } else if( bsc == ( udsapp_tx_bsc + 1 ) ) {
-      /* send next */
+      *end next
       udsapp_tx_address = &udsapp_tx_address[udsapp_tx_plen];
       udsapp_tx_bytes += (uint32_t) udsapp_tx_plen;
       if( udsapp_tx_bytes > udsapp_tx_size ) {
-        /* transfered too many bytes
-        shouldn't happen, but should check */
+        transfered too many bytes
+        shouldn't happen, but should check
         nrc = UDS_NRC_GPF;
       } else {
         uint32_t diff;
@@ -345,7 +344,7 @@ udsapp_transfer_data( uint8_t bsc, uint8_t *buf, uint16_t *buf_len )
         udsapp_tx_bsc = bsc;
       }
     } else {
-      /* requested a bsc which is not valid */
+      // requested a bsc which is not valid
       nrc = UDS_NRC_WBSC;
     }
     if( nrc == UDS_NRC_NONE ) {
@@ -358,9 +357,9 @@ udsapp_transfer_data( uint8_t bsc, uint8_t *buf, uint16_t *buf_len )
     if( bsc == udsapp_tx_bsc ) {
       nrc = UDS_NRC_NONE;
       *buf_len = 0;
-      /* ignore repeat and hope for best */
+      //ignore repeat and hope for best
     } else if( bsc == ( udsapp_tx_bsc + 1 ) ) {
-      /* receive next message */
+      //receive next message
       udsapp_tx_bsc = bsc;
       udsapp_tx_address = &udsapp_tx_address[udsapp_tx_plen];
       udsapp_tx_plen = *buf_len;
@@ -368,27 +367,25 @@ udsapp_transfer_data( uint8_t bsc, uint8_t *buf, uint16_t *buf_len )
       for( cnt = 0; cnt < *buf_len; cnt++ ) { udsapp_tx_address[cnt] = buf[cnt]; }
 
     } else {
-      /* sequence error */
+      //sequence error
       nrc = UDS_NRC_WBSC;
     }
   } else {
-    /* not currently in a transfer */
+    //not currently in a transfer
     nrc = UDS_NRC_RSE;
   }
   return nrc;
 }
 
-/*
-** Exit a transfer.
-** Args: trpr -> Optional transfer paramaters
-**       trpr_len -> length of transfer paramters buf
-**       rsp -> response to be sent to tester
-**       rsp_len -> length of response
-** Output: Set rsp and rsp_len
-**         Return UDS_NRC_NONE if transfer exited successfully.
-*/
-uint8_t
-udsapp_transfer_exit( uint8_t *trpr, uint16_t trpr_len, uint8_t *rsp, uint16_t *rsp_len )
+// Exit a transfer.
+// Args: trpr -> Optional transfer paramaters
+//       trpr_len -> length of transfer paramters buf
+//       rsp -> response to be sent to tester
+//       rsp_len -> length of response
+// Output: Set rsp and rsp_len
+//         Return UDS_NRC_NONE if transfer exited successfully.
+
+uint8_t udsapp_transfer_exit( uint8_t *trpr, uint16_t trpr_len, uint8_t *rsp, uint16_t *rsp_len )
 {
   udsapp_tx_dir = UDSAPP_TRANSFER_FINISHED;
   rsp[0] = UDS_SVCID_TXEXIT + UDS_PRSP;
@@ -396,16 +393,14 @@ udsapp_transfer_exit( uint8_t *trpr, uint16_t trpr_len, uint8_t *rsp, uint16_t *
   return UDS_NRC_NONE;
 }
 
-/*
-** Control setting of DTC
-** Args: subfunc -> subfunction of message
-**       opt_rec -> optional control record
-**       rec_len -> length of record
-** Output: Return UDS_NRC_NONE if successful
-**         Return UDS_NRC_ROOR if DTC not supported
-*/
-uint8_t
-udsapp_contr_dtc( uint8_t subfunc, uint8_t *opt_rec, uint16_t rec_len )
+// Control setting of DTC
+// Args: subfunc -> subfunction of message
+//       opt_rec -> optional control record
+//       rec_len -> length of record
+// Output: Return UDS_NRC_NONE if successful
+//         Return UDS_NRC_ROOR if DTC not supported
+
+uint8_t udsapp_contr_dtc( uint8_t subfunc, uint8_t *opt_rec, uint16_t rec_len )
 {
   switch( subfunc ) {
     case 0x01:
@@ -417,30 +412,26 @@ udsapp_contr_dtc( uint8_t subfunc, uint8_t *opt_rec, uint16_t rec_len )
   }
 }
 
-/*
-** Reset baud rate to default during session change
-** Return 0 on success
-*/
-uint8_t
-udsapp_reset_timing( void )
+
+// Reset baud rate to default during session change
+// Return 0 on success
+
+uint8_t udsapp_reset_timing( void )
 {
   return 0;
 }
 
-/*
-** Clears all response on event messages
-** ROE is not currently supported.
-*/
-uint8_t
-udsapp_clear_roe( void )
+// Clears all response on event messages
+// ROE is not currently supported.
+
+uint8_t udsapp_clear_roe( void )
 {
   return 0;
 }
 
-/*
-** Reset security to locked state on session change
-** Return 0 on success
-*/
+//Reset security to locked state on session change
+//Return 0 on success
+
 uint8_t
 udsapp_reset_security( void )
 {
@@ -449,31 +440,29 @@ udsapp_reset_security( void )
   return 0;
 }
 
-/*
-** Seed/Key security mechanism
-** Args: sub_func -> type of message being processed
-**       rec -> seed or key received
-**       rec_len -> length of received seed or key
-** Output: rsp -> response to be sent to tester
-**         rsp_len -> length of response
-** Return: UDS_NRC_NONE on success
-*/
-uint8_t
-udsapp_secure_access( uint8_t sub_func, uint8_t *rec, uint16_t rec_len, uint8_t *rsp, uint16_t *rsp_len )
+//Seed/Key security mechanism
+// Args: sub_func -> type of message being processed
+//       rec -> seed or key received
+//       rec_len -> length of received seed or key
+// Output: rsp -> response to be sent to tester
+//         rsp_len -> length of response
+// Return: UDS_NRC_NONE on success
+
+uint8_t udsapp_secure_access( uint8_t sub_func, uint8_t *rec, uint16_t rec_len, uint8_t *rsp, uint16_t *rsp_len )
 {
   uint8_t nrc;
   switch( sub_func ) {
     case 0x01:
-      /* - check current security
-         - set seed out flag
-         - set active pair to 01/02
-         - send seed
-         PORT: Change this function to be more secure than the example
-         */
+      // - check current security
+     //  - set seed out flag
+    //   - set active pair to 01/02
+   //    - send seed
+  //      PORT: Change this function to be more secure than the example
+        
       if( rec_len != 0 ) {
         nrc = UDS_NRC_IMLOIF;
       } else if( uds_secure_status == UDS_SECURE ) {
-        /* send a response with the seed 0x00000001*/
+        //send a response with the seed 0x00000001
         rsp[0] = UDS_SVCID_SECURACC + UDS_PRSP;
         rsp[1] = 0x01; /* echo of sub function */
         rsp[2] = 0x00;
@@ -481,7 +470,7 @@ udsapp_secure_access( uint8_t sub_func, uint8_t *rec, uint16_t rec_len, uint8_t 
         rsp[4] = 0x00;
         rsp[5] = 0x01;
         *rsp_len = 6;   
-        /* waiting for key 1 to pair with seed 1 */
+        // waiting for key 1 to pair with seed 1
         udsapp_seed_flag = UDS_SECURE_01;
         nrc = UDS_NRC_NONE;
       } else if( uds_secure_status == UDS_UNSECURE ) {
@@ -518,15 +507,13 @@ udsapp_secure_access( uint8_t sub_func, uint8_t *rec, uint16_t rec_len, uint8_t 
   return nrc;
 }
 
-/*
-** Transition to a default session
-*/
-uint8_t
-udsapp_session_default( void )
+//Transition to a default session
+
+uint8_t udsapp_session_default( void )
 {
-  /* reset everything except timing */
+  //reset everything except timing
   udsapp_init();
-  /* reset timing to original values */
+  //reset timing to original values
   udsapp_reset_timing();
   uds_p2 = UDSCFG_DS_P2;
   uds_p2star = UDSCFG_DS_P2STAR;
@@ -535,7 +522,7 @@ udsapp_session_default( void )
   return UDS_NRC_NONE;
 }
 
-// Transition to a programming session
+//transition to a programming session
 uint8_t
 udsapp_session_programming( void )
 {
@@ -553,8 +540,7 @@ udsapp_session_programming( void )
   return UDS_NRC_NONE;
 }
 
-uint8_t
-udsapp_session_extended( void )
+uint8_t udsapp_session_extended( void )
 {
   if( uds_stype == UDS_STYPE_DS ) {
     udsapp_clear_roe();
@@ -583,28 +569,25 @@ uint8_t udsapp_session_safety( void )
   return UDS_NRC_NONE;
 }
 
-/*
-** Read a periodic data identifier
-** Args: trans_mode -> Transmission mode
-**        dids -> Data-identifiers to be transmitted
-**        did_cnt -> Number of data identifiers
-**        rsp -> Response to be transmitted to host
-**        rsp_len -> Length of response
-** Output: Set rsp and rsp_len
-** Return: UDS_NRC_NONE on success
-**         UDS_NRC_ROOR if data-id is invalid
-*/
-uint8_t
-udsapp_rdperdataid( uint8_t trans_mode, uint8_t *dids, uint16_t did_cnt, uint8_t ta, uint8_t *rsp, uint16_t *rsp_len )
+// Read a periodic data identifier
+//Args: trans_mode -> Transmission mode
+//        dids -> Data-identifiers to be transmitted
+//        did_cnt -> Number of data identifiers
+//        rsp -> Response to be transmitted to host
+//        rsp_len -> Length of response
+// Output: Set rsp and rsp_len
+// Return: UDS_NRC_NONE on success
+//         UDS_NRC_ROOR if data-id is invalid
+
+uint8_t udsapp_rdperdataid( uint8_t trans_mode, uint8_t *dids, uint16_t did_cnt, uint8_t ta, uint8_t *rsp, uint16_t *rsp_len )
 {
   uint32_t trans_time;
   uint8_t cnt, i, nrc = UDS_NRC_SNS;
   uint8_t rdbpi_placed = 0;
   uint8_t did_present_cnt = 0;
 
-  /* PORT: User needs to verify DID valid and is 7 bytes or less
-  **       Return ROOR if not
-  */
+  //PORT: User needs to verify DID valid and is 7 bytes or less
+  //      Return ROOR if not
 
   switch( trans_mode ) {
     case 1:
@@ -680,8 +663,7 @@ udsapp_rdperdataid( uint8_t trans_mode, uint8_t *dids, uint16_t did_cnt, uint8_t
   return nrc;
 }
 
-uint8_t
-udsapp_rdbpi_send_data( uint8_t did, uint8_t ta )
+uint8_t udsapp_rdbpi_send_data( uint8_t did, uint8_t ta )
 {
   uint8_t data_len = 0;
   //uint8_t *data=NULL; 
@@ -698,27 +680,25 @@ udsapp_rdbpi_send_data( uint8_t did, uint8_t ta )
     frame.buf[0] = did;
     for( cnt = 0; cnt < data_len; cnt++ ) { frame.buf[cnt + 1] = data[cnt]; }
 
-    /* PORT: use ta to translate into CAN ID, drop this frame directly to data link layer */
+    // PORT: use ta to translate into CAN ID, drop this frame directly to data link layer
     frame.id = ta;
     frame.buf_len = data_len + 1;
-//    can_tx( &frame );     //Sathya
     can_tx (1, &frame );
   }
   return nrc;
 }
 
-/*
-** Read a DTC
-** Args: sub_func -> Sub-function being requested
-**        buf -> input from tester
-**        buf_len -> length of buf
-**        rsp -> response to be transmitted to tester
-**        rsp_len -> length of response
-** Output: Set rsp and rsp_len
-** Return: UDS_NRC_NONE on success
-**         UDS_NRC_SFNS if requested sub-function is not supported
-**         UDS_NRC_ROOR if requested DTC is not valid
-*/
+//Read a DTC
+//Args: sub_func -> Sub-function being requested
+//           buf -> input from tester
+//       buf_len -> length of buf
+//           rsp -> response to be transmitted to tester
+//       rsp_len -> length of response
+//Output: Set rsp and rsp_len
+//Return: UDS_NRC_NONE on success
+//        UDS_NRC_SFNS if requested sub-function is not supported
+//        UDS_NRC_ROOR if requested DTC is not valid 
+
 uint8_t udsapp_readdtc( uint8_t sub_func, uint8_t *buf, uint16_t buf_len, uint8_t *rsp, uint16_t *rsp_len )
 {
   uint8_t nrc = UDS_NRC_NONE;
@@ -772,17 +752,16 @@ uint8_t udsapp_readdtc( uint8_t sub_func, uint8_t *buf, uint16_t buf_len, uint8_
   return nrc;
 }
 
-/*
-** Switches between sessions as requested
-** Args: session_type -> session being requested
-** Returns: UDS_NRC_NONE on success
-*/
+//switches between sessions as requested
+//Args: session_type -> session being requested
+//Returns: UDS_NRC_NONE on success
+
 uint8_t udsapp_session( uint8_t session_type )
 {
   uint8_t nrc = UDS_NRC_NONE;
   switch( session_type ) {
     case UDS_STYPE_DS:
-      /* switch on current session type*/
+      //switch on current session type
       nrc = udsapp_session_default();
       break;
     case UDS_STYPE_PRGS:
