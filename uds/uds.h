@@ -89,6 +89,47 @@ const uint32_t UDS_SUBFN_SUPLR_ID       = 0x12C5U; //SUPPLIER_Id
 const uint8_t UDS_SUBFN_ACESLEV_13      = 0x13U;
 const uint8_t UDS_SUBFN_ACESLEV_14      = 0x14U;
 
+#define UDSCFG_TESTER_TIMEOUT_THRESHOLD ((uint32_t) 0xFFFFU)
+#define UDSCFG_MAXBLKSIZE 48U
+#define UDSCFG_TRANSFER_FMT 1
+#define UDSCFG_DEFAULT_SA 0x32
+
+#define UDSCFG_RDBPI_SLOW  1000U
+#define UDSCFG_RDBPI_MED    500U
+#define UDSCFG_RDBPI_FAST   100U
+#define UDSCFG_RDBPI_STOP     0U
+#define UDSCFG_RDBPI_MAX     10
+
+#define UDSCFG_DS_P2  20
+#define UDSCFG_DS_P2STAR (UDSCFG_DS_P2 * 10)
+#define UDSCFG_PRGS_P2  20
+#define UDSCFG_PRGS_P2STAR (UDSCFG_PRGS_P2 * 10)
+#define UDSCFG_EXTDS_P2  20
+#define UDSCFG_EXTDS_P2STAR (UDSCFG_EXTDS_P2 * 10)
+#define UDSCFG_SSDS_P2  20
+#define UDSCFG_SSDS_P2STAR (UDSCFG_SSDS_P2 * 10)
+
+#define UDSCFG_MINADDR 0U
+#define UDSCFG_MAXADDR 0xFFFFFFFFU
+#define UDSCFG_TXSIZE_MIN 0U
+#define UDSCFG_TXSIZE_MAX 0xFFFFU
+
+#define UDS_SECURE 0
+#define UDS_UNSECURE 1
+#define UDS_SECURE_01 1
+
+
+extern uint8_t uds_secure_status;
+extern uint8_t uds_stype;
+extern uint16_t uds_p2;
+extern uint16_t uds_p2star;
+
+extern void uds_tx ( const i15765_t *rec_msg, const uint8_t *ibuf, uint16_t len );
+extern void uds_process ( const i15765_t *msg );
+extern void uds_update ( void );
+extern void uds_nrsp ( const i15765_t *msg, uint8_t nrc, uint8_t svcid );
+extern void uds_init ( void );
+
 // Function prototypes for UDS functions
 void sendUDSRequest(UdsServiceId serviceId, uint8_t *data, size_t dataSize);
 void handleUDSResponse(uint8_t *responseData, size_t responseSize);
